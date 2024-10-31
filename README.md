@@ -3,7 +3,7 @@
 
 일정을 생성, 조회, 수정, 삭제할 수 있는 API입니다.
 
-## API 사양
+![image](https://github.com/user-attachments/assets/dbb4c072-8751-4bbf-ba17-3cc7b30fdcee)
 
 ### 기본 URL
 
@@ -208,4 +208,34 @@ sCREATE TABLE userinfo (
     create_date DATE DEFAULT CURRENT_DATE,
     user_name VARCHAR(10) NOT NULL
 );
+```
+
+###일정생성 쿼리
+```
+INSERT INTO schedules (password, work, user_id, schedules_date)
+VALUES ('비밀번호', '일정', '유저아이디', '2024-10-29');
+```
+###전체 일정 조회 쿼리
+```
+SELECT s.id, s.work, s.user_id, s.schedules_date, s.created_date, s.modified_date 
+FROM schedules s
+JOIN userinfo u ON s.user_id = u.user_id
+WHERE s.modified_date = '2024-10-30' OR u.user_id = '아이디'ORDER BY s.modified_date DESC;
+```
+###단일 일정 조회 쿼리
+```
+SELECT id, work, user_id, schedules_date, created_date, modified_date 
+FROM schedules
+WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
+```
+###일정 수정 쿼리
+```
+UPDATE schedules 
+SET work = '약속', user_name = '홍길동' 
+WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
+```
+###일정 삭제 쿼리
+```
+DELETE FROM schedules 
+WHERE id = 'id' AND password = 'password';
 ```
