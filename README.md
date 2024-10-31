@@ -1,4 +1,4 @@
-﻿# Schedule-Management-App
+﻿# ScheduleManagementApp
 # 일정 관리 앱 API 설계문서
 ![image](https://github.com/user-attachments/assets/dbb4c072-8751-4bbf-ba17-3cc7b30fdcee)
 
