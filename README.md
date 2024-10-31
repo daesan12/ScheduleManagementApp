@@ -1,7 +1,6 @@
 ﻿# Schedule-Management-App
-# 일정 관리 API 문서
+# 일정 관리 앱 API 설계문서
 
-일정을 생성, 조회, 수정, 삭제할 수 있는 API입니다.
 
 ![image](https://github.com/user-attachments/assets/dbb4c072-8751-4bbf-ba17-3cc7b30fdcee)
 
@@ -187,7 +186,7 @@
 ## 데이터베이스 테이블 생성 쿼리
 
 ### 일정 테이블
-```
+```sql
 sqlCREATE TABLE schedules (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- 일정을 구분하는 아이디
     password VARCHAR(30),
@@ -201,7 +200,7 @@ sqlCREATE TABLE schedules (
 ```
 
 ### 유저 테이블
-```
+```sql
 sCREATE TABLE userinfo (
     user_id VARCHAR(10) PRIMARY KEY,
     email VARCHAR(50),
@@ -211,31 +210,31 @@ sCREATE TABLE userinfo (
 ```
 
 ###일정생성 쿼리
-```
+```sql
 INSERT INTO schedules (password, work, user_id, schedules_date)
 VALUES ('비밀번호', '일정', '유저아이디', '2024-10-29');
 ```
 ###전체 일정 조회 쿼리
-```
+```sql
 SELECT s.id, s.work, s.user_id, s.schedules_date, s.created_date, s.modified_date 
 FROM schedules s
 JOIN userinfo u ON s.user_id = u.user_id
 WHERE s.modified_date = '2024-10-30' OR u.user_id = '아이디'ORDER BY s.modified_date DESC;
 ```
 ###단일 일정 조회 쿼리
-```
+```sql
 SELECT id, work, user_id, schedules_date, created_date, modified_date 
 FROM schedules
 WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
 ```
 ###일정 수정 쿼리
-```
+```sql
 UPDATE schedules 
 SET work = '약속', user_name = '홍길동' 
 WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
 ```
 ###일정 삭제 쿼리
-```
+```sql
 DELETE FROM schedules 
 WHERE id = 'id' AND password = 'password';
 ```
