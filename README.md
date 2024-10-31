@@ -209,31 +209,31 @@ sCREATE TABLE userinfo (
 );
 ```
 
-###일정생성 쿼리
+***일정생성 쿼리***
 ```sql
 INSERT INTO schedules (password, work, user_id, schedules_date)
 VALUES ('비밀번호', '일정', '유저아이디', '2024-10-29');
 ```
-###전체 일정 조회 쿼리
+***전체 일정 조회 쿼리***
 ```sql
 SELECT s.id, s.work, s.user_id, s.schedules_date, s.created_date, s.modified_date 
 FROM schedules s
 JOIN userinfo u ON s.user_id = u.user_id
 WHERE s.modified_date = '2024-10-30' OR u.user_id = '아이디'ORDER BY s.modified_date DESC;
 ```
-###단일 일정 조회 쿼리
+***단일 일정 조회 쿼리***
 ```sql
 SELECT id, work, user_id, schedules_date, created_date, modified_date 
 FROM schedules
 WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
 ```
-###일정 수정 쿼리
+***일정 수정 쿼리***
 ```sql
 UPDATE schedules 
 SET work = '약속', user_name = '홍길동' 
 WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
 ```
-###일정 삭제 쿼리
+***일정 삭제 쿼리***
 ```sql
 DELETE FROM schedules 
 WHERE id = 'id' AND password = 'password';
