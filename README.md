@@ -1,8 +1,7 @@
 ﻿# Schedule-Management-App
 # 일정 관리 앱 API 설계문서
-
-
 ![image](https://github.com/user-attachments/assets/dbb4c072-8751-4bbf-ba17-3cc7b30fdcee)
+
 
 ### 기본 URL
 
@@ -238,3 +237,5 @@ WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
 DELETE FROM schedules 
 WHERE id = 'id' AND password = 'password';
 ```
+### ERD
+![erd](https://github.com/user-attachments/assets/59736ce0-d053-4440-b68a-8bf7f5d404bc)
