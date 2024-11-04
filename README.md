@@ -1,7 +1,8 @@
 ﻿# ScheduleManagementApp
-# 일정 관리 앱 API 설계문서
-![image](https://github.com/user-attachments/assets/dbb4c072-8751-4bbf-ba17-3cc7b30fdcee)
 
+# 일정 관리 앱 API 설계문서
+
+![image](https://github.com/user-attachments/assets/dbb4c072-8751-4bbf-ba17-3cc7b30fdcee)
 
 ### 기본 URL
 
@@ -22,20 +23,20 @@
     ```
 
 - **응답**
-  - 성공 시 (상태 코드 200):
-      ```json
-      {
-          "code": "200",
-          "message": "등록완료"
-      }
-      ```
-  - 실패 시 (상태 코드 400):
-      ```json
-      {
-          "code": "400",
-          "message": "잘못된 요청입니다."
-      }
-      ```
+    - 성공 시 (상태 코드 200):
+        ```json
+        {
+            "code": "200",
+            "message": "등록완료"
+        }
+        ```
+    - 실패 시 (상태 코드 400):
+        ```json
+        {
+            "code": "400",
+            "message": "잘못된 요청입니다."
+        }
+        ```
 
 ---
 
@@ -46,22 +47,22 @@
 - **Params**: `id`
 
 - **응답**
-  - 성공 시 (상태 코드 200):
-      ```json
-      {
-          "id": "1",
-          "userId": "qwe123",
-          "scheduleDate": "2024-10-29 20:30:41",
-          "work": "회식"
-      }
-      ```
-  - 실패 시 (상태 코드 400):
-      ```json
-      {
-          "code": "400",
-          "message": "잘못된 요청입니다."
-      }
-      ```
+    - 성공 시 (상태 코드 200):
+        ```json
+        {
+            "id": "1",
+            "userId": "qwe123",
+            "scheduleDate": "2024-10-29 20:30:41",
+            "work": "회식"
+        }
+        ```
+    - 실패 시 (상태 코드 400):
+        ```json
+        {
+            "code": "400",
+            "message": "잘못된 요청입니다."
+        }
+        ```
 
 ---
 
@@ -71,38 +72,38 @@
 - **Method**: `GET`
 
 - **응답**
-  - 성공 시 (상태 코드 200):
-      ```json
-      {
-          "schedules": [
-              {
-                  "id": "1",
-                  "userId": "qwe123",
-                  "scheduleDate": "2024-10-29 20:30:41",
-                  "work": "회식"
-              },
-              {
-                  "id": "2",
-                  "userId": "qwe321",
-                  "scheduleDate": "2024-11-29 20:30:43",
-                  "work": "외식"
-              },
-              {
-                  "id": "3",
-                  "userId": "ewq321",
-                  "scheduleDate": "2024-12-29 20:30:49",
-                  "work": "금식"
-              }
-          ]
-      }
-      ```
-  - 실패 시 (상태 코드 400):
-      ```json
-      {
-          "code": "400",
-          "message": "잘못된 요청입니다."
-      }
-      ```
+    - 성공 시 (상태 코드 200):
+        ```json
+        {
+            "schedules": [
+                {
+                    "id": "1",
+                    "userId": "qwe123",
+                    "scheduleDate": "2024-10-29 20:30:41",
+                    "work": "회식"
+                },
+                {
+                    "id": "2",
+                    "userId": "qwe321",
+                    "scheduleDate": "2024-11-29 20:30:43",
+                    "work": "외식"
+                },
+                {
+                    "id": "3",
+                    "userId": "ewq321",
+                    "scheduleDate": "2024-12-29 20:30:49",
+                    "work": "금식"
+                }
+            ]
+        }
+        ```
+    - 실패 시 (상태 코드 400):
+        ```json
+        {
+            "code": "400",
+            "message": "잘못된 요청입니다."
+        }
+        ```
 
 ---
 
@@ -121,27 +122,27 @@
     ```
 
 - **응답**
-  - 성공 시 (상태 코드 200):
-      ```json
-      {
-          "message": "수정완료"
-      }
-      ```
-  - 실패 시
-    - 400 (잘못된 요청):
+    - 성공 시 (상태 코드 200):
         ```json
         {
-            "code": "400",
-            "message": "잘못된 요청입니다."
+            "message": "수정완료"
         }
         ```
-    - 404 (존재하지 않는 ID):
-        ```json
-        {
-            "code": "404",
-            "message": "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
-        }
-        ```
+    - 실패 시
+        - 400 (잘못된 요청):
+            ```json
+            {
+                "code": "400",
+                "message": "잘못된 요청입니다."
+            }
+            ```
+        - 404 (존재하지 않는 ID):
+            ```json
+            {
+                "code": "404",
+                "message": "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+            }
+            ```
 
 ---
 
@@ -158,33 +159,34 @@
     ```
 
 - **응답**
-  - 성공 시 (상태 코드 200):
-      ```json
-      {
-          "message": "삭제완료"
-      }
-      ```
-  - 실패 시
-    - 400 (잘못된 요청):
+    - 성공 시 (상태 코드 200):
         ```json
         {
-            "code": "400",
-            "message": "잘못된 요청입니다."
+            "message": "삭제완료"
         }
         ```
-    - 404 (존재하지 않는 ID):
-        ```json
-        {
-            "code": "404",
-            "message": "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
-        }
-        ```
+    - 실패 시
+        - 400 (잘못된 요청):
+            ```json
+            {
+                "code": "400",
+                "message": "잘못된 요청입니다."
+            }
+            ```
+        - 404 (존재하지 않는 ID):
+            ```json
+            {
+                "code": "404",
+                "message": "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+            }
+            ```
 
 ---
 
 ## 데이터베이스 테이블 생성 쿼리
 
 ### 일정 테이블
+
 ```sql
 sqlCREATE TABLE schedules (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- 일정을 구분하는 아이디
@@ -199,6 +201,7 @@ sqlCREATE TABLE schedules (
 ```
 
 ### 유저 테이블
+
 ```sql
 sCREATE TABLE userinfo (
     user_id VARCHAR(10) PRIMARY KEY,
@@ -209,33 +212,44 @@ sCREATE TABLE userinfo (
 ```
 
 ***일정생성 쿼리***
+
 ```sql
 INSERT INTO schedules (password, work, user_id, schedules_date)
 VALUES ('비밀번호', '일정', '유저아이디', '2024-10-29');
 ```
+
 ***전체 일정 조회 쿼리***
+
 ```sql
 SELECT s.id, s.work, s.user_id, s.schedules_date, s.created_date, s.modified_date 
 FROM schedules s
 JOIN userinfo u ON s.user_id = u.user_id
 WHERE s.modified_date = '2024-10-30' OR u.user_id = '아이디'ORDER BY s.modified_date DESC;
 ```
+
 ***단일 일정 조회 쿼리***
+
 ```sql
 SELECT id, work, user_id, schedules_date, created_date, modified_date 
 FROM schedules
 WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
 ```
+
 ***일정 수정 쿼리***
+
 ```sql
 UPDATE schedules 
 SET work = '약속', user_name = '홍길동' 
 WHERE DATE_FORMAT(schedules_date, '%Y-%m-%d') = '2024-10-29';
 ```
+
 ***일정 삭제 쿼리***
+
 ```sql
 DELETE FROM schedules 
 WHERE id = 'id' AND password = 'password';
 ```
+
 ### ERD
+
 ![erd](https://github.com/user-attachments/assets/59736ce0-d053-4440-b68a-8bf7f5d404bc)
