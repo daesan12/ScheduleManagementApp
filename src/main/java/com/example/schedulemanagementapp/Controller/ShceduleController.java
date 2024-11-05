@@ -1,6 +1,12 @@
 package com.example.schedulemanagementapp.Controller;
 
 public class ShceduleController {
-//코드
-    //코드
+
+    public void test(){
+        System.out.println("테스트");
+    }
+
+    public void test2(){
+        System.out.println("테스트2");
+    }
 }
