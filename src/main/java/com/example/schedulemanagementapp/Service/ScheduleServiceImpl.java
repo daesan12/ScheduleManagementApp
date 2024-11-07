@@ -10,6 +10,7 @@ import com.example.schedulemanagementapp.repository.ScheduleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
@@ -47,9 +48,9 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override
-    public List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName) {
-        List<ScheduleResponseDto> schedule = scheduleRepository.findAllSchedules(modifiedDate,userName);
-        return scheduleRepository.findAllSchedules(modifiedDate,userName);
+    public List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName,int page, int size ) {
+        List<ScheduleResponseDto> schedule = scheduleRepository.findAllSchedules(modifiedDate,userName,page,size);
+        return scheduleRepository.findAllSchedules(modifiedDate,userName,page,size);
     }
 
     @Transactional

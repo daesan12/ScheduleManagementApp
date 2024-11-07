@@ -4,6 +4,7 @@ import com.example.schedulemanagementapp.dto.ScheduleResponseDto;
 import com.example.schedulemanagementapp.dto.UserResponseDto;
 import com.example.schedulemanagementapp.entity.Schedule;
 import com.example.schedulemanagementapp.entity.User;
+import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,17 +16,16 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class jdbcTemplateScheduleRepository implements ScheduleRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final ProjectInfoAutoConfiguration projectInfoAutoConfiguration;
 
-    public jdbcTemplateScheduleRepository(DataSource dataSource) {
+    public jdbcTemplateScheduleRepository(DataSource dataSource, ProjectInfoAutoConfiguration projectInfoAutoConfiguration) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.projectInfoAutoConfiguration = projectInfoAutoConfiguration;
     }
 
     @Override
@@ -69,16 +69,32 @@ System.out.println("유저아이디:"+schedule.getUserId()+"\n비번:"+schedule.
     }
 
     @Override
-    public List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName) {
+    public List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName,int page,int size) {
+        System.out.println("페이지 번호="+page+", 사이즈="+size);
+        int offset = (page - 1) * size;
+        List<Object> params = new ArrayList<>();
+
         StringBuilder sb = new StringBuilder();
         sb.append("select id,user_id,work,user_name,schedules_date,created_date,modified_date from schedules ");
 
             if(StringUtils.hasText(modifiedDate)||StringUtils.hasText(userName)) {
-                sb.append("where DATE(modified_date)=? OR user_name =?");
-                return jdbcTemplate.query(sb.toString(), saveScheduleRowMapper(),modifiedDate ,userName );
-            }
+                sb.append("where ");
+                if(StringUtils.hasText(modifiedDate)) {
+                    sb.append("DATE(modified_date) = ? ");
+                    params.add(modifiedDate);
+                }
+                if(StringUtils.hasText(userName)){
+                    if (!params.isEmpty()) sb.append("OR ");
+                    sb.append("user_name = ? ");
+                    params.add(userName);
+                }
 
-        return jdbcTemplate.query(sb.toString(), saveScheduleRowMapper() );
+            }
+        sb.append("LIMIT ? OFFSET ?");
+            params.add(size);
+            params.add(offset);
+
+        return jdbcTemplate.query(sb.toString(),params.toArray() ,ScheduleRowMapperV1() );
     }
 
     @Override
@@ -99,7 +115,7 @@ System.out.println("유저아이디:"+schedule.getUserId()+"\n비번:"+schedule.
         return jdbcTemplate.update("delete from schedules where id = ? and password = ?" ,id,password);
     }
 
-    private RowMapper<ScheduleResponseDto> saveScheduleRowMapper() {
+    private RowMapper<ScheduleResponseDto> ScheduleRowMapperV1() {
         return new RowMapper<ScheduleResponseDto>() {
             @Override
             public ScheduleResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {

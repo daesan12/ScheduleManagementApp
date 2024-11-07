@@ -25,7 +25,6 @@ public ScheduleController(ScheduleService scheduleService) {
     @PostMapping("/schedule")
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto dto){
     return new ResponseEntity<>(scheduleService.saveSchedule(dto), HttpStatus.CREATED);
-
     }
 
 
@@ -36,9 +35,12 @@ public ScheduleController(ScheduleService scheduleService) {
     }
 
     @GetMapping
-    public List<ScheduleResponseDto> findAllSchedules(@RequestParam(value="modifiedDate",required = false)String modifiedDate ,@RequestParam(value="userName",required = false) String userName ){
-
-        return scheduleService.findAllSchedules(modifiedDate,userName);
+    public List<ScheduleResponseDto> findAllSchedules(@RequestParam(value="modifiedDate",required = false)String modifiedDate,
+            @RequestParam(value="userName",required = false) String userName,
+            @RequestParam(value="page", defaultValue = "1")int page,
+            @RequestParam(value="size", defaultValue = "10")int size){
+        System.out.println("페이지 번호="+page+", 사이즈="+size);
+        return scheduleService.findAllSchedules(modifiedDate,userName,page,size);
     }
 
     @GetMapping("/{id}")

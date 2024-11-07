@@ -16,7 +16,7 @@ public interface ScheduleRepository {
 
     UserResponseDto saveUser(User user);
 
-    List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName);
+    List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName,int page,int size);
 
     Schedule findScheduleByIdorElseThrow(Long id);
 
