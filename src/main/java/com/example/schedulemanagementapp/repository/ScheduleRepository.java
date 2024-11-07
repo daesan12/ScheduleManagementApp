@@ -21,4 +21,6 @@ public interface ScheduleRepository {
     Schedule findScheduleByIdorElseThrow(Long id);
 
     int updateSchedule(Long id, String work, String userName, String password);
+
+    int deleteScheduleByid(Long id, String password);
 }

@@ -94,6 +94,11 @@ System.out.println("유저아이디:"+schedule.getUserId()+"\n비번:"+schedule.
         return jdbcTemplate.update("update schedules set work= ?, user_name= ? where  id = ? and password= ?" ,work,userName,id,password);
     }
 
+    @Override
+    public int deleteScheduleByid(Long id, String password) {
+        return jdbcTemplate.update("delete from schedules where id = ? and password = ?" ,id,password);
+    }
+
     private RowMapper<ScheduleResponseDto> saveScheduleRowMapper() {
         return new RowMapper<ScheduleResponseDto>() {
             @Override
