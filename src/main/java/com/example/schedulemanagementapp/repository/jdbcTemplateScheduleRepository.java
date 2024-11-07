@@ -108,6 +108,8 @@ System.out.println("유저아이디:"+schedule.getUserId()+"\n비번:"+schedule.
     @Override
     public int updateSchedule(Long id, String work, String userName, String password) {
         return jdbcTemplate.update("update schedules set work= ?, user_name= ? where  id = ? and password= ?" ,work,userName,id,password);
+
+
     }
 
     @Override

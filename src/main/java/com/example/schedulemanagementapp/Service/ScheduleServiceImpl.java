@@ -56,31 +56,32 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Transactional
     @Override
     public ScheduleResponseDto updateSchedule(Long id, String work, String userName, String password) {
-
+        //필수 입력값 검증
         if(id == null || password == null || work == null || userName == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디, 비밀번호, 일정, 유저이름은 필수값입니다");
         }
+        //사용자 이름 길이 검증
         if (userName.length() > 10) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "사용자 이름은 10자를 초과할 수 없습니다.");
         }
 
+        //스케줄 업데이트 시도
         int updateRow = scheduleRepository.updateSchedule(id,work,userName,password);
         if (updateRow == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "스케줄을 찾을 수 없거나 비밀번호가 일치하지 않습니다.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "스케줄을 찾을 수 없거나 비밀번호가 일치하지 않습니다.");
         }
-
+        //업데이트 된 스케줄 조회
         Schedule schedule = scheduleRepository.findScheduleByIdorElseThrow(id);
-
-
         return new ScheduleResponseDto(schedule);
     }
 
     @Override
     public void deleteSchedule(Long id, String password) {
+        //스케줄 삭제
         int deletedRow = scheduleRepository.deleteScheduleByid(id,password);
 
         if(deletedRow == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "아이디가 존재하지않습니다"+id);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지않거나 아이디가 존재하지않습니다"+id);
         }
     }
 }
