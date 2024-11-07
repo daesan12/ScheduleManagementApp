@@ -6,6 +6,7 @@ import com.example.schedulemanagementapp.dto.ScheduleRequestDto;
 import com.example.schedulemanagementapp.dto.ScheduleResponseDto;
 import com.example.schedulemanagementapp.dto.UserRequestDto;
 import com.example.schedulemanagementapp.dto.UserResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,19 +25,19 @@ public ScheduleController(ScheduleService scheduleService) {
 }
 
     @PostMapping("/schedule")
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto dto){
+    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody @Valid ScheduleRequestDto dto){
     return new ResponseEntity<>(scheduleService.saveSchedule(dto), HttpStatus.CREATED);
     }
 
 
     @PostMapping("/user")
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto dto){
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody @Valid UserRequestDto dto){
 
         return new ResponseEntity<>(scheduleService.saveUser(dto), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<ScheduleResponseDto> findAllSchedules(@RequestParam(value="modifiedDate",required = false)String modifiedDate,
+    public List<ScheduleResponseDto> findAllSchedules(@RequestParam(value="modifiedDate")@Valid String modifiedDate,
             @RequestParam(value="userName",required = false) String userName,
             @RequestParam(value="page", defaultValue = "1")int page,
             @RequestParam(value="size", defaultValue = "10")int size){
@@ -45,19 +46,19 @@ public ScheduleController(ScheduleService scheduleService) {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable(value="id",required = false)Long id){
+    public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable(value="id")@Valid Long id){
     return new ResponseEntity<>(scheduleService.findScheduleById(id),HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable(value="id")Long id,@RequestBody ScheduleRequestDto dto){
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable(value="id")Long id,@Valid @RequestBody ScheduleRequestDto dto){
 
 
         return new ResponseEntity<>(scheduleService.updateSchedule(id,dto.getWork(),dto.getUserName(),dto.getPassword()),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable(value="id")Long id,@RequestBody ScheduleRequestDto dto){
+    public ResponseEntity<Void> deleteSchedule(@PathVariable(value="id")Long id,@Valid @RequestBody ScheduleRequestDto dto){
         scheduleService.deleteSchedule(id,dto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
