@@ -4,22 +4,21 @@ import com.example.schedulemanagementapp.dto.ScheduleResponseDto;
 import com.example.schedulemanagementapp.dto.UserResponseDto;
 import com.example.schedulemanagementapp.entity.Schedule;
 import com.example.schedulemanagementapp.entity.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.DataSource;
-import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class jdbcTemplateScheduleRepository implements ScheduleRepository {
@@ -82,6 +81,14 @@ System.out.println("유저아이디:"+schedule.getUserId()+"\n비번:"+schedule.
         return jdbcTemplate.query(sb.toString(), saveScheduleRowMapper() );
     }
 
+    @Override
+    public Schedule findScheduleByIdorElseThrow(Long id) {
+
+        List<Schedule> result = jdbcTemplate.query("select id,user_id,work,user_name,schedules_date,created_date,modified_date from schedules where id = ? ", ScheduleRowMapperV2(),id);
+
+        return result.stream().findAny().orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"없는 아이디입니다"+id));
+    }
+
     private RowMapper<ScheduleResponseDto> saveScheduleRowMapper() {
         return new RowMapper<ScheduleResponseDto>() {
             @Override
@@ -90,8 +97,27 @@ System.out.println("유저아이디:"+schedule.getUserId()+"\n비번:"+schedule.
                         rs.getLong("id"),
                         rs.getString("user_id"),
                         rs.getString("work"),
-                        rs.getString("schedules_date"),
                         rs.getString("user_name"),
+                        rs.getString("schedules_date"),
+                        rs.getString("created_date"),
+                        rs.getString("modified_date")
+                );
+            }
+        };
+
+    }
+
+
+    private RowMapper<Schedule> ScheduleRowMapperV2() {
+        return new RowMapper<Schedule>() {
+            @Override
+            public Schedule mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Schedule(
+                        rs.getLong("id"),
+                        rs.getString("work"),
+                        rs.getString("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("schedules_date"),
                         rs.getString("created_date"),
                         rs.getString("modified_date")
                 );

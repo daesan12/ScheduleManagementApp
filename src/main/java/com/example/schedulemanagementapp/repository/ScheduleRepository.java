@@ -7,6 +7,7 @@ import com.example.schedulemanagementapp.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ScheduleRepository {
@@ -16,4 +17,6 @@ public interface ScheduleRepository {
     UserResponseDto saveUser(User user);
 
     List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName);
+
+    Schedule findScheduleByIdorElseThrow(Long id);
 }

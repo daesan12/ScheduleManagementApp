@@ -41,5 +41,10 @@ public ScheduleController(ScheduleService scheduleService) {
         return scheduleService.findAllSchedules(modifiedDate,userName);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> findScheduleById(@PathVariable(value="id",required = false)Long id){
+    return new ResponseEntity<>(scheduleService.findScheduleById(id),HttpStatus.OK);
+    }
+
 
 }
