@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ScheduleServiceImpl implements ScheduleService{
+public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
@@ -36,7 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto dto) {
-        Schedule schedule = new Schedule(dto.getUserId(),dto.getWork(),dto.getPassword(), dto.getUserName(),dto.getSchedulesDate());
+        Schedule schedule = new Schedule(dto.getUserId(), dto.getWork(), dto.getPassword(), dto.getUserName(), dto.getSchedulesDate());
         return scheduleRepository.saveSchedule(schedule);
     }
 
@@ -48,16 +48,16 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override
-    public List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName,int page, int size ) {
-        List<ScheduleResponseDto> schedule = scheduleRepository.findAllSchedules(modifiedDate,userName,page,size);
-        return scheduleRepository.findAllSchedules(modifiedDate,userName,page,size);
+    public List<ScheduleResponseDto> findAllSchedules(String modifiedDate, String userName, int page, int size) {
+        List<ScheduleResponseDto> schedule = scheduleRepository.findAllSchedules(modifiedDate, userName, page, size);
+        return scheduleRepository.findAllSchedules(modifiedDate, userName, page, size);
     }
 
     @Transactional
     @Override
     public ScheduleResponseDto updateSchedule(Long id, String work, String userName, String password) {
         //필수 입력값 검증
-        if(id == null || password == null || work == null || userName == null) {
+        if (id == null || password == null || work == null || userName == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "아이디, 비밀번호, 일정, 유저이름은 필수값입니다");
         }
         //사용자 이름 길이 검증
@@ -66,7 +66,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         }
 
         //스케줄 업데이트 시도
-        int updateRow = scheduleRepository.updateSchedule(id,work,userName,password);
+        int updateRow = scheduleRepository.updateSchedule(id, work, userName, password);
         if (updateRow == 0) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "스케줄을 찾을 수 없거나 비밀번호가 일치하지 않습니다.");
         }
@@ -78,10 +78,10 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public void deleteSchedule(Long id, String password) {
         //스케줄 삭제
-        int deletedRow = scheduleRepository.deleteScheduleByid(id,password);
+        int deletedRow = scheduleRepository.deleteScheduleByid(id, password);
 
-        if(deletedRow == 0) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지않거나 아이디가 존재하지않습니다"+id);
+        if (deletedRow == 0) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지않거나 아이디가 존재하지않습니다" + id);
         }
     }
 }
