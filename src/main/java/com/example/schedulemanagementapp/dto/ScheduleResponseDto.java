@@ -3,6 +3,7 @@ package com.example.schedulemanagementapp.dto;
 import com.example.schedulemanagementapp.entity.Schedule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatusCode;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

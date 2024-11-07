@@ -14,5 +14,5 @@ public interface ScheduleService {
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto dto);
     public UserResponseDto saveUser(UserRequestDto dto);
     public List<ScheduleResponseDto> findAllSchedules(String modifiedDate,String userName);
-
+    public ScheduleResponseDto updateSchedule(Long id, String work,String userName,String password);
 }
